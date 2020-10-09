@@ -1,0 +1,526 @@
+import { themes } from 'mdx-deck'
+import { CodeSurfer } from "code-surfer"
+import { nightOwl, shadesOfPurple } from "@code-surfer/themes"
+
+export const theme = nightOwl
+
+<Footer>
+
+<Horizontal>
+
+##### _Ciclo de charlas_
+
+#### Reusabilidad
+
+##### _Reliable React_
+
+</Horizontal>
+
+</Footer>
+
+# Ciclo de Charlas
+
+# Reliable React
+
+<Notes>
+
+- Recordar:
+    - poner a grabar
+    - timer comienza cuando paso slide 1
+
+- Hola! Bienvenidos a otra charlita del ciclo Reliable React
+
+</Notes>
+
+---
+
+# Reusabilidad
+
+## en
+
+# React
+
+<Notes>
+
+- Presentación
+  - Nombre
+  - Equipo mantiene Listing
+
+- Modalidad
+  - 20 a 30 min
+  - Que se lleven un concepto
+  - Interrumpir por burradas
+  - Preguntas al final
+- Presentar el tema
+- Gancho: para empezar...
+
+</Notes>
+
+---
+
+## Que significa `reusabilidad`?
+
+<Notes>
+
+- Gancho: la mejor forma de averiguarlo...
+
+</Notes>
+
+---
+
+> [Definición](http://diccionario.raing.es/es/lema/reusabilidad): _(Informática)_
+>> ## Propiedad de reutilización de un componente de un sistema software.
+
+<Notes>
+
+- Segun la Real Academia de Ingenieria (alguien la conoce?)
+
+- Leer pausado
+- Gancho: o sea, siendo un poco mas pragmatico...
+
+</Notes>
+
+---
+
+import destpala from './assets/destornillador-pala.png'
+
+<Steps>
+
+> ## Volver a utilizar algo
+
+<Horizontal>
+
+<img
+  alt='destornillador pala'
+  src={destpala}
+  style={{ maxWidth: '30vw' }}
+/>
+
+</Horizontal>
+
+</Steps>
+
+<Notes>
+
+- Reutilizar = volver a utilizar algo, con misma la función o no
+
+- Mostrar ejemplo
+- Gancho: pero, no hay que confundir...
+
+</Notes>
+
+---
+
+import punta from './assets/punta-destornillador.png'
+import sinpunta from './assets/destornillador-sin-punta.jpg'
+import agujereadora from './assets/agujereadora.png'
+
+<Steps>
+
+> ## Reusabilidad ≠ Componibilidad
+
+<Split>
+
+<img
+  alt='punta para atornillar'
+  src={punta}
+  style={{ maxWidth: '40vw' }}
+/>
+
+<img
+  alt='destornillador sin punta'
+  src={sinpunta}
+  style={{ maxWidth: '25vw', maxHeight: '30vh' }}
+/>
+
+<img
+  alt='agujereadora'
+  src={agujereadora}
+  style={{ maxWidth: '25vw', maxHeight: '25vh' }}
+/>
+
+</Split>
+
+</Steps>
+
+<Notes>
+
+- Composability: PRINCIPAL    PRINCIPIO de DISEÑO de React
+
+- Componibilidad es la capacidad de un objeto de funcionar en diferentes contextos
+- Mostrar fotos
+- Una punta tiene la capacidad de funcionar...
+- Pero, la composicion trae aparejados ciertos protocolos
+- Gancho: tampoco hay que confundir...
+
+</Notes>
+
+---
+
+import destcruz from './assets/destornillador-cruz.png'
+import desttorx from './assets/destornillador-torx.png'
+
+<Steps>
+
+> ## Reusabilidad ≠ Repetibilidad
+
+<Split>
+
+<img
+  alt='destornillador pala'
+  src={destpala}
+  style={{ objectFit: 'contain', maxWidth: '30vw' }}
+/>
+
+<img
+  alt='destornillador torx'
+  src={desttorx}
+  style={{ objectFit: 'cover', maxWidth: '30vw', maxHeight: '30vh' }}
+/>
+
+<img
+  alt='destornillador cruz'
+  src={destcruz}
+  style={{ objectFit: 'cover', maxWidth: '35vw', maxHeight: '30vh' }}
+/>
+
+</Split>
+
+</Steps>
+
+<Notes>
+
+- Repetibilidad es la habilidad de replicar el diseño de un objeto
+
+- Mostrar fotos
+- Parecidos pero con distinto diseño
+- Gancho: podemos entonces preguntarnos...
+
+</Notes>
+
+---
+
+## Que significa `reusabilidad` en React, entonces?
+
+<Notes>
+
+- Gancho: bueno, para eso deberiamos definir...
+
+</Notes>
+
+---
+
+# Niveles de Reusabilidad
+
+<Notes>
+
+- Gancho: cuales serian esos niveles...
+
+</Notes>
+
+---
+
+<Steps>
+
+- Para nada reusable
+
+- Reusable dentro de una app
+
+- Reusable en varias apps
+
+</Steps>
+
+<Notes>
+
+- Bullet 1
+  - Seniors cuando tienen deadlines jodidos
+  - Juniors para que simplemente ande
+
+- Bullet 2
+  - Caso común
+  - No reiventar la rueda
+  - No hay esfuerzo extra
+- Bullet 3
+  - Compartidos en librerias de componentes
+  - Material UI, Andes, Seller Central UI
+- Gancho: pero... y como se verian cada uno de ellos?
+
+</Notes>
+
+---
+
+## El ejemplo clásico
+
+# `<Button>`
+
+<Notes>
+
+- Resiste al paso del tiempo
+
+- Gancho: puede salir mal? Veamos...
+
+</Notes>
+
+---
+
+<CodeSurfer>
+
+```js
+const BuyMeButton = ({
+  isDisabled,
+  icon,
+  width,
+  bu
+}) => {
+  const color = isDisabled === true ? '#999999' : '#1274b8';
+  const btnClass = props.bu === 'mp' ? 'btn__blue' : 'btn__yellow';
+  return (
+    <button className={btnClass}>
+      <Icon
+        styles={icon.styles}
+        width={width}
+        color={color}
+      />
+      Buy Me Now
+    </button>
+  );
+};
+
+import { BuyMeButton } from './BuyMeButton'
+
+const SuperStoreItem = () => {
+  /* hago cosas */
+  return <BuyMeButton
+    width='32px'
+    icon={ styles ? ...styles : null }
+  />
+}
+```
+
+```diff 1:19 title='El crímen'
+```
+
+```diff 21:29 title='La escena'
+```
+
+```diff 16 title='Y las tradus?'
+```
+
+```diff 11:15 title='Por qué hay un ícono!?'
+```
+
+```diff 7,8 title='Y SI QUIERO MAS COLORES!?'
+```
+
+</CodeSurfer>
+
+<Notes>
+
+- Nuestro boton, en este caso, se transformo en un crímen...
+
+- ...y esta es la escena del crímen, el componente padre
+- Vemos varias cosas mal:
+  - ...texto hardcodeado, si queremos traducir?
+  - ...conoce a Icon, si necesitamos boton solo?
+  - ...logica de estilos, si necesitamos reusar con otros colores?
+
+</Notes>
+
+---
+
+import happening from './assets/happening-wahlberg.png'
+
+<img
+  alt=''
+  src={happening}
+  style={{ objectFit: 'cover', width: '80vw', height: '80vh' }}
+/>
+
+<Notes>
+
+- Gancho: mas allá del chiste...
+
+</Notes>
+
+---
+
+## Como podemos mejorar esto?
+
+<Notes>
+
+- Gancho: bueno, hagamos un refactor al vuelo...
+
+</Notes>
+
+---
+
+<CodeSurfer>
+
+```js
+const Button = ({ children, onClick, className, ...props }) => {   
+  return (
+    <button className={className} onClick={onClick}>
+      {children}
+    </button>
+  );
+};
+
+const SuperStoreItem = (props) => {
+  const iconColor = props.isDisabled === true ? '#999999' : '#1274b8';
+  const btnClass = props.bu === 'mp' ? 'btn__blue' : 'btn__yellow';
+  const onClick = () => { /* hago magia */ };
+  return (
+    <Button className={btnClass} onClick={onClick}>
+      <Icon
+        styles={props.icon.styles}
+        width={props.icon.width}
+        color={iconColor}
+      />
+      Buy Me Now
+    </Button>
+  );
+};
+```
+
+```diff 1:7 title='Minimalista y reusable'
+```
+
+```diff 10,11,14[13:32],18[9:21] title='Defino estilos'
+```
+
+```diff 12,14[34:51] title='Mapeo eventos'
+```
+
+```diff 15:20 title='Decido que renderizar'
+```
+
+</CodeSurfer>
+
+<Notes>
+
+- Ya va tomando forma
+
+- Animacion:
+  - minimalista en props, reusable en comportamiento
+  - logica de estilos en padre
+  - mapeo de eventos
+  - decido que renderizar
+- Gancho: es un gran avance, pero...
+
+</Notes>
+
+---
+
+## Que puede ser mejor que ésto?
+
+---
+
+## Librerías de componentes
+
+<Steps>
+
+- API
+
+- Versionado
+
+- Instalación
+
+- Linting
+
+- Colaboración
+
+- Performance
+
+- Testeabilidad
+
+- Automatización
+
+- Integración
+
+</Steps>
+
+<Notes>
+
+- API con diseño consciente: fácil, configurable, moderna
+
+- Esquema de versionado: por componente, por librería
+- Instalación: storybook, npm i -s @{LIBRERIA}/{COMPONENTE}
+- Linting: conciso, mejora la lectura de los PRs
+- Colaboración: aprender de filosofia open-source
+- Performance: si es medible, es mejorable
+- Testeabilidad: múltiples dispositivos, navegadores y resoluciones
+- Automatización: CI/CD, publicación
+- Integración: CI/CD, test sobre apps, PRs automatizados
+
+</Notes>
+
+---
+
+## Entonces que significa `reusabilidad`?
+
+---
+
+<Steps>
+
+## Decisión _técnica_, sí...
+
+## Decisión **filosofica**, también!
+
+</Steps>
+
+<Notes>
+
+- No es simplemente técnica la decisión, sino tambien filosofica ya que requiere compromiso de todos
+
+- Gancho: y tiene grandes...
+
+</Notes>
+
+---
+
+## Implicaciones
+
+<Steps>
+
+- Estructura y estándares consistentes
+
+- Equipo de devs "embajadores"
+
+- Descubribilidad de componentes
+
+- Cambio de enfoque
+
+- Empoderamiento
+
+</Steps>
+
+<Notes>
+
+- Estructura:
+  - functional repos, @lib/nav => breadcrumb, tabs, sidenav link...
+  - complete and clear documentation
+  - enforce quality through CI/CD
+- Embajadores:
+  - few developers with a particularly deep understanding
+  - devote time to review the code
+  - will develop overall knowledge of what’s being built across the organization
+- Descubribilidad:
+  - fast, simple way to discover components available
+  - see them in use and interact with them
+  - learn about their implementation, configuration, and dependencies
+- Enfoque:
+  - technological solutions aren’t enough
+  — company-wide change in thinking
+  - reusability-first approach
+  - taking the time to generalize components so that reuse is easier
+  - expanding existing components rather than starting from scratch
+  - consciously seeking out opportunities to share code whenever possible
+- Empoderamiento:
+  - no team or developer “owns” a component
+  - eliminates bottlenecks and empowers developers to improve existing components
+
+</Notes>
+
+---
+
+## Preguntas?
